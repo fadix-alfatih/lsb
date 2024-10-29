@@ -1,0 +1,207 @@
+{% load static %}
+<!--
+=========================================================
+* Argon Dashboard 2 - v2.0.4
+=========================================================
+
+* Product halaman: https://www.creative-tim.com/product/argon-dashboard
+* Copyright 2022 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://www.creative-tim.com/license)
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>
+		{% block title %}{% endblock title %}
+	</title>
+	<link rel="icon" type="image/png" href="{% static 'img/favicon.png' %}">
+	<!-- Fonts and icons -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+	<!-- Nucleo Icons -->
+	<link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet" />
+	<link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
+	<!-- Font Awesome Icons -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+	<link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
+	<!-- CSS Files -->
+	<link id="halamanstyle" href="{% static 'css/argon-dashboard.css' %}" rel="stylesheet" />
+	<script src="{% static 'config.js' %}"></script>
+	<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+	<style>
+	hr {
+		/* Check for styles that might affect visibility */
+		display: block;
+		border: none;
+		height: 1px;
+		color: #ccc;
+		background-color: #ccc;
+		margin: 1em 0;
+		padding: 0;
+	}
+</style>
+
+<link href="//cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css" />
+</head>
+
+<body class="g-sidenav-show bg-gray-100">
+	<div class="position-absolute w-100">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 320"><path fill="#5e72e4" fill-opacity="1" d="M0,160L40,181.3C80,203,160,245,240,250.7C320,256,400,224,480,229.3C560,235,640,277,720,282.7C800,288,880,256,960,218.7C1040,181,1120,139,1200,144C1280,149,1360,203,1400,229.3L1440,256L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"></path></svg>
+	</div>
+	<aside class="sidenav bg-white navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-4 " id="sidenav-main">
+		<div class="sidenav-header text-center">
+			<a class="navbar-brand m-0" href="{% url 'dashboard' %}" target="_blank">
+				<img src="{% static 'img/favicon.png' %}">
+				<span class="ms-1 font-weight-bold">Least Significant Bit</span>
+			</a>
+		</div>
+		<hr class="horizontal dark mt-0">
+		<div class="collapse navbar-collapse" id="sidenav-collapse-main">
+			<ul class="navbar-nav">
+				<li class="nav-item">
+					<a class="nav-link {% if halaman == 'dashboard' %}active{% endif %}" href="{% url 'dashboard' %}">
+						<div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+							<i class="ni ni-tv-2 text-primary text-sm opacity-10"></i>
+						</div>
+						<span class="nav-link-text ms-1">Dashboard</span>
+					</a>
+				</li>
+				<li class="nav-item mt-3">
+					<h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Steganografi</h6>
+					<a class="nav-link {% if halaman == 'penyisipan' %}active{% endif %}" href="{% url 'penyisipan' %}">
+						<div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+							<i class="ni ni-bold-right text-primary text-sm opacity-10"></i>
+						</div>
+						<span class="nav-link-text ms-1">Penyisipan</span>
+					</a>
+					<a class="nav-link {% if halaman == 'ekstraksi' %}active{% endif %}" href="{% url 'ekstraksi' %}">
+						<div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+							<i class="ni ni-bold-left text-primary text-sm opacity-10"></i>
+						</div>
+						<span class="nav-link-text ms-1">View/Ekstraksi</span>
+					</a>
+				</li>
+				<li class="nav-item mt-3">
+					<h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Riwayat</h6>
+					<a class="nav-link {% if halaman == 'aktivitas' %}active{% endif %}" href="{% url 'aktivitas' %}">
+						<div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+							<i class="ni ni-collection text-primary text-sm opacity-10"></i>
+						</div>
+						<span class="nav-link-text ms-1">Aktivitas</span>
+					</a>
+				</li>
+				{% if user.is_superuser %}
+				<li class="nav-item mt-3">
+					<h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Administrator</h6>
+					<a class="nav-link {% if halaman == 'pengguna' %}active{% endif %}" href="{% url 'pengguna' %}">
+						<div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+							<i class="fa fa-users text-primary text-sm opacity-10"></i>
+						</div>
+						<span class="nav-link-text ms-1">Pengguna</span>
+					</a>
+				</li>
+				{% endif %}
+				<li class="nav-item mt-3">
+					<h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Keluar</h6>
+					<!-- <a class="nav-link {% if halaman == 'profil' %}active{% endif %}" href="{% url 'dashboard' %}">
+						<div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+							<i class="fa fa-user text-primary text-sm opacity-10"></i>
+						</div>
+						<span class="nav-link-text ms-1">Profil</span>
+					</a> -->
+					<a class="nav-link" href="{% url 'signout' %}">
+						<div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+							<i class="fa fa-sign-out text-primary text-sm opacity-10"></i>
+						</div>
+						<span class="nav-link-text ms-1">Sign Out</span>
+					</a>
+				</li>
+				<!-- <li class="nav-item mt-3">
+					<h6 class="ps-4 ms-2 text-uppercase text-xs font-weight-bolder opacity-6">Halaman Admin</h6>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link {% if halaman == 'profile' %}active{% endif %}" href="">
+						<div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+							<i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
+						</div>
+						<span class="nav-link-text ms-1">Profile</span>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link {% if halaman == 'users' %}active{% endif %}" href="">
+						<div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+							<i class="fa fa-users text-danger text-sm opacity-10"></i>
+						</div>
+						<span class="nav-link-text ms-1">Users</span>
+					</a>
+				</li> -->
+			</ul>
+		</aside>
+		<main class="main-content position-relative border-radius-lg ">
+			<!-- Navbar -->
+			<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl " id="navbarBlur" data-scroll="false">
+				<div class="container-fluid py-1 px-3">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+							<li class="breadcrumb-item text-sm"><a class="opacity-5 text-white">Pages</a></li>
+							<li class="breadcrumb-item text-sm text-white {% if not state %}active{% endif %}" aria-current="halaman">{% block breadcrumb %}{% endblock breadcrumb %}</li>
+							{% if state and uid %}
+							<li class="breadcrumb-item text-sm text-white active" aria-current="halaman">{{uid}}</li>
+							{% endif %}
+						</ol>
+						<h6 class="font-weight-bolder text-white mb-0">{% block page %}{% endblock page %}</h6>
+					</nav>
+					<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+						<div class="ms-md-auto pe-md-3 d-flex align-items-center">
+						</div>
+						<ul class="navbar-nav  justify-content-end">
+							<li class="nav-item dropdown pe-4 d-flex align-items-center">
+								<a class="nav-link text-white p-0 font-weight-bold" aria-expanded="false">
+									Halo, {% if user.is_authenticated %}
+									{{ user.username }}!
+									{% else %}
+									User!
+									{% endif %}
+								</a>
+							</li><!-- 
+							<li class="nav-item d-flex align-items-center">
+								<a href="#" class="nav-link text-white font-weight-bold px-0">
+									<i class="fa fa-question-circle-o me-sm-1"></i>
+									<span class="d-sm-inline d-none">Bantuan</span>
+								</a>
+							</li> -->
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<!-- End Navbar -->
+			<div class="container-fluid py-4">
+				{% block content %}{% endblock content %}
+			</div>
+		</main>
+		<!-- Core JS Files -->
+		<script src="{% static 'js/core/popper.min.js' %}"></script>
+		<script src="{% static 'js/core/bootstrap.min.js' %}"></script>
+		<script src="{% static 'js/plugins/perfect-scrollbar.min.js' %}"></script>
+		<script src="{% static 'js/plugins/smooth-scrollbar.min.js' %}"></script>
+		<!-- <script src="{% static 'js/plugins/chartjs.min.js' %}"></script> -->
+		<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example halamans etc -->
+		<!-- <script src="{% static 'js/argon-dashboard.min.js?v=2.0.4' %}"></script> -->
+
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<!-- <script type="text/javascript" src="{% static 'ajax_datatable/js/utils.js' %}"></script> -->
+		<script src="//cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+		{% block script %}{% endblock script %}
+	</body>
+
+	</html>

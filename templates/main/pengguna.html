@@ -1,0 +1,75 @@
+{% extends "base-main.html" %}
+{% block title %}{{ halaman|title }}{% endblock %}
+{% block breadcrumb %}{{ halaman|title }}{% endblock %}
+{% block page %}{{ halaman|title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h6>{{ halaman|title }}</h6>
+			</div>
+			<div class="card-body">
+        {% for message in messages %}
+        <div class="container-fluid p-0">
+          <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{message.tags}}{% endif %} text-white alert-dismissible" role="alert" >
+            <i class="fa {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}" aria-hidden="true"></i>&nbsp;
+            {{ message }}
+          </div>
+        </div>
+        {% endfor %}
+        <div class="table-responsive p-0">
+          <table class="table align-items-center mb-0">
+            <thead>
+              <tr>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Pengguna</th>
+                <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Staff</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Terdaftar</th>
+                <th class="text-secondary opacity-7"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {% if pengguna %}
+              {% for p in pengguna %}
+              <tr>
+                <td>
+                  <div class="d-flex px-2 py-1"><i class="bi bi-person-vcard-fill text-primary"></i>
+                    <div class="d-flex flex-column justify-content-center offset-sm-1">
+                      <h6 class="mb-0 text-sm">{{p.username}}</h6>
+                      <p class="text-xs text-secondary mb-0">{{p.email}}</p>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <p class="text-sm font-weight-bold mb-0">{% if p.is_staff %}Administrator{% else %}User{% endif %}</p>
+                </td>
+                <td class="align-middle text-center text-sm">
+                  {% if p.aktivitaspengguna.is_online %}
+                  <span class="badge badge-sm bg-gradient-success">Online</span>
+                  {% else %}
+                  <span class="badge badge-sm bg-gradient-secondary">Offline</span>
+                  {% endif %}
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ p.date_joined|date:"d/m/Y" }}</span>
+                </td>
+                <td class="align-middle text-center">
+                  <span class="text-secondary text-xs font-weight-bold">{{ p.last_login }}</span>
+                </td>
+              </tr>
+              {% endfor %}
+              {% else %}
+              <p class="text-center">Data tidak tersedia</p>
+              {% endif %}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

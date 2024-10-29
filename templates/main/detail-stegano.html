@@ -1,0 +1,85 @@
+{% extends "base-main.html" %}
+{% block title %}{{ halaman|title }}{% endblock %}
+{% block breadcrumb %}{{ halaman|title }}{% endblock %}
+{% block page %}{{ halaman|title }} - {{ data.namagambar }}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header pb-0">
+				<div class="row">
+					<div class="col-lg-8">
+						<h6>{{ halaman|title }} - {{ data.namagambar }}</h6>
+					</div>
+					<div class="col-lg-2">
+						<a href="{% url 'unduh' marker data.id %}" class="btn btn-success w-100">Unduh</a>
+					</div>
+					<div class="col-lg-2">
+						<a href="{% url 'hapus' marker data.id %}" class="btn btn-danger w-100">Hapus</a>
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive p-0">
+          <table class="table align-items-center mb-0">
+            <tbody>
+              <tr>
+                <td>
+                	<div class="d-flex px-2 py-1"><i class="fa fa-file-image-o text-primary"></i>
+                    <div class="d-flex flex-column justify-content-center offset-sm-1">
+                      <h6 class="mb-0 text-sm">Gambar</h6>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column offset-sm-1">
+                      <p class="mb-0 text-sm">{{data.namagambar}}</p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% if marker == 'penyisipan' %}
+              <tr>
+                <td>
+                	<div class="d-flex px-2 py-1"><i class="fa fa-file-image-o text-primary"></i>
+                    <div class="d-flex flex-column justify-content-center offset-sm-1">
+                      <h6 class="mb-0 text-sm">PSNR</h6>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column offset-sm-1">
+                      <p class="mb-0 text-sm">{{data.psnr}}</p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                	<div class="d-flex px-2 py-1"><i class="fa fa-file-image-o text-primary"></i>
+                    <div class="d-flex flex-column justify-content-center offset-sm-1">
+                      <h6 class="mb-0 text-sm">MSE</h6>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column offset-sm-1">
+                      <p class="mb-0 text-sm">{{data.mse}}</p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              {% endif %}
+            </tbody>
+          </table>
+        </div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

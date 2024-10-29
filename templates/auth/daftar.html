@@ -1,0 +1,65 @@
+{% extends "base-auth.html" %}
+{% block title %}Daftar{% endblock %}
+{% block page %}Daftar{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="ro justify-content-center">
+    <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
+      <div class="card mt-lg-n15 mt-md-n11 mt-n10">
+        <div class="card-header text-center pt-4">
+          <h4 class="font-weight-bolder">Daftar</h4>
+          <p class="mb-0 text-sm">Masukkan nama, username, and password anda untuk melakukan pendaftaran</p>
+        </div>
+        <div class="card-body">
+          {% for message in messages %}
+          <div class="container-fluid p-0">
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{message.tags}}{% endif %} text-white alert-dismissible" role="alert" >
+              <i class="fa {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}" aria-hidden="true"></i>&nbsp;
+              {{ message }}
+            </div>
+          </div>
+          {% endfor %}
+          <form class="login-form" method="POST">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group position-relative">
+                  <label>Your Email <span class="text-danger">*</span></label>
+                  {{form.email}}
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group position-relative">
+                  <label>Username <span class="text-danger">*</span></label>
+                  {{form.username}}
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group position-relative">
+                  <label>Password <span class="text-danger">*</span></label>
+                  {{form.password}}
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group position-relative">
+                  <label>Konfirmasi Password <span class="text-danger">*</span></label>
+                  {{form.passwordconf}}
+                </div>
+                <div class="col-md-12">
+                  <button class="btn btn-primary w-100" type="submit" >Daftar</button>
+                </div>
+              </div>
+            </form>
+
+          </div>
+          <div class="card-footer text-center pt-0 px-lg-2 px-1">
+            <p class="mb-1 text-sm mx-auto">
+              Sudah punya akun?
+              <a href="{% url 'signin' %}" class="text-primary text-gradient font-weight-bold">Login</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}

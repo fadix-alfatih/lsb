@@ -1,0 +1,48 @@
+{% extends "base-main.html" %}
+{% block title %}{{ halaman|title }}{% endblock %}
+{% block breadcrumb %}{{ halaman|title }}{% endblock %}
+{% block page %}{{ halaman|title }} - {{ data.username }}{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header pb-0">
+				<div class="row">
+					<div class="col-lg-10">
+						<h6>{{ halaman|title }} - {{ data.username }}</h6>
+					</div>
+					<div class="col-lg-2">
+						<a href="{% url 'hapus-pengguna' data.username %}" class="btn btn-danger w-100 {% if data.is_superuser %}disabled text-white{% endif %}">Hapus</a>
+					</div>
+				</div>
+			</div>
+			<div class="card-body">
+				<div class="table-responsive p-0">
+          <table class="table align-items-center mb-0">
+            <tbody>
+              <tr>
+                <td>
+                	<div class="d-flex px-2 py-1"><i class="fa fa-user text-primary"></i>
+                    <div class="d-flex flex-column justify-content-center offset-sm-1">
+                      <h6 class="mb-0 text-sm">Username</h6>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <div class="d-flex px-2 py-1">
+                    <div class="d-flex flex-column offset-sm-1">
+                      <p class="mb-0 text-sm">{{data.username}}</p>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

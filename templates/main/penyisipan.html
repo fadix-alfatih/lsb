@@ -1,0 +1,67 @@
+{% extends "base-main.html" %}
+{% block title %}{{ halaman|title }}{% endblock %}
+{% block breadcrumb %}{{ halaman|title }}{% endblock %}
+{% block page %}{{ halaman|title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+      <div class="col-xl-12 col-sm-12 mb-xl-0 mb-4">
+            <div class="card">
+                  <div class="card-header pb-0">
+                        <h6>{{ halaman|title }}</h6>
+                  </div>
+                  <div class="card-body">
+                        {% for message in messages %}
+                        <div class="container-fluid p-0">
+                              <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{message.tags}}{% endif %} text-white alert-dismissible" role="alert" >
+                                  <i class="fa {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}" aria-hidden="true"></i>&nbsp;{{ message }}
+                              </div>
+                      </div>
+                      {% endfor %}
+                      {% if completed %}
+                      <a href="{% url 'unduh' 'penyisipan' myid %}" class="btn btn-success w-100">Unduh Gambar</a>
+                      {% endif %}
+                      <form autocomplete="off" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="row g-4">
+                              <img id="preview" src="#" alt="Preview Image" style="display:none;">
+                        </div>
+                        <div class="row g-4">
+                              <div class="col-xl-12 col-sm-12">
+                                    <div class="form-group position-relative">
+                                          <label>Gambar <span class="text-danger">*</span></label>
+                                          {{form.gambar}}
+                                    </div>
+                              </div>
+                        </div>
+                        <div class="col-xl-12 col-sm-12">
+                              <div class="form-group position-relative">
+                                    <label>Pesan Rahasia <span class="text-danger">*</span></label>
+                                    {{form.pesan}}
+                              </div>
+                        </div>
+                        <div class="col-xl-12 col-sm-12">
+                              <input type="submit" class="btn btn-primary mt-2 w-100" value="Sisipkan">
+                        </div>
+                  </form>
+            </div>
+      </div>
+</div>
+</div>
+{% endblock %}
+{% block script %}
+<script>
+function previewImage(event) {
+    var input = event.target;
+    var reader = new FileReader();
+
+    reader.onload = function(){
+        var imgElement = document.getElementById('preview');
+        imgElement.src = reader.result;
+        imgElement.style.display = 'block';
+    };
+
+    reader.readAsDataURL(input.files[0]);
+}
+</script>
+{% endblock script %}

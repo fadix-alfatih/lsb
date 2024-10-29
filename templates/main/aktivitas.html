@@ -1,0 +1,177 @@
+{% extends "base-main.html" %}
+{% block title %}{{ halaman|title }}{% endblock %}
+{% block breadcrumb %}{{ halaman|title }}{% endblock %}
+{% block page %}{{ halaman|title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-12">
+		<div class="card">
+			<div class="card-header">
+				<h6>{{ halaman|title }}</h6>
+			</div>
+			<div class="card-body">
+				<!-- Bordered Tabs Justified -->
+        {% for message in messages %}
+          <div class="container-fluid p-0">
+            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{message.tags}}{% endif %} text-white alert-dismissible" role="alert" >
+              <i class="fa {% if message.tags == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}" aria-hidden="true"></i>&nbsp;
+              {{ message }}
+            </div>
+          </div>
+          {% endfor %}
+        <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+          <li class="nav-item flex-fill" role="presentation">
+            <button class="nav-link w-100 active" id="penyisipan-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-penyisipan" type="button" role="tab" aria-controls="penyisipan" aria-selected="true"><p class="text-sm text-uppercase">Penyisipan</p></button>
+          </li>
+          <li class="nav-item flex-fill" role="presentation">
+            <button class="nav-link w-100" id="ekstraksi-tab" data-bs-toggle="tab" data-bs-target="#bordered-justified-ekstraksi" type="button" role="tab" aria-controls="ekstraksi" aria-selected="false"><p class="text-sm text-uppercase">Ekstraksi</p></button>
+          </li>
+        </ul>
+        <div class="tab-content pt-2" id="borderedTabJustifiedContent">
+          <div class="tab-pane fade show active" id="bordered-justified-penyisipan" role="tabpanel" aria-labelledby="penyisipan-tab">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center justify-content-center mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Gambar</th>
+                    <th width="2%"></th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hasil</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Ukuran</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Waktu</th>
+                    {% if user.is_superuser %}
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">User</th>
+                    {% endif %}
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% if model_penyisipan %}
+                  {% for data in model_penyisipan %}
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2">
+                        <div class="my-auto">
+                          <h6 class="mb-0 text-sm offset-sm-1">{{data.nama}}</h6>
+                        </div>
+                      </div>
+                    </td>
+                    <td><i class="ni ni-bold-right text-primary text-sm opacity-10"></i></td>
+                    <td>
+                      <p class="text-sm font-weight-bold mb-0">{{data.namagambar}}</p>
+                    </td>
+                    <td>
+                      <p class="text-sm font-weight-bold mb-0">{{data.ukuran}}</p>
+                    </td>
+                    <td>
+                      <span class="text-xs font-weight-bold">{{data.waktu}}</span>
+                    </td>
+                    {% if user.is_superuser %}
+                    <td class="align-middle text-center">
+                      <div class="d-flex align-items-center justify-content-center">
+                        <span class="badge badge-sm bg-gradient-success">{{data.user}}</span>
+                      </div>
+                    </td>
+                    {% else %}
+                    <td class="align-middle text-center">
+                      <div class="d-flex align-items-center justify-content-center">
+                        {{data.user}}
+                      </div>
+                    </td>
+                    {% endif %}
+                    <td class="align-middle">
+                      <button class="btn btn-link text-secondary mb-0">
+                        <a href="{% url 'detail' 'penyisipan' data.id %}" class="text-sm font-weight-light">
+                        <i class="fa fa-ellipsis-v text-xs"></i> Detail
+                        </a>
+                      </button>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  {% else %}
+                  <tr>
+                    <td colspan="5">
+                      <p class="text-sm text-center font-weight-bold mb-0">Data tidak tersedia</p>
+                    </td>
+                  </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="bordered-justified-ekstraksi" role="tabpanel" aria-labelledby="ekstraksi-tab">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center justify-content-center mb-0">
+                <thead>
+                  <tr>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Gambar</th>
+                    <th width="2%"></th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Hasil</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Ukuran</th>
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Waktu</th>
+                    {% if user.is_superuser %}
+                    <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">User</th>
+                    {% endif %}
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% if model_ekstraksi %}
+                  {% for data in model_ekstraksi %}
+                  <tr>
+                    <td>
+                      <div class="d-flex px-2">
+                        <div class="my-auto">
+                          <h6 class="mb-0 text-sm offset-sm-1">{{data.nama}}</h6>
+                        </div>
+                      </div>
+                    </td>
+                    <td><i class="ni ni-bold-right text-primary text-sm opacity-10"></i></td>
+                    <td>
+                      <p class="text-sm font-weight-bold mb-0">{{data.namagambar}}</p>
+                    </td>
+                    <td>
+                      <p class="text-sm font-weight-bold mb-0">{{data.ukuran}}</p>
+                    </td>
+                    <td>
+                      <span class="text-xs font-weight-bold">{{data.waktu}}</span>
+                    </td>
+                    {% if user.is_superuser %}
+                    <td class="align-middle text-center">
+                      <div class="d-flex align-items-center justify-content-center">
+                        <span class="badge badge-sm bg-gradient-success">{{data.user}}</span>
+                      </div>
+                    </td>
+                    {% else %}
+                    <td class="align-middle text-center">
+                      <div class="d-flex align-items-center justify-content-center">
+                        {{data.user}}
+                      </div>
+                    </td>
+                    {% endif %}
+                    <td class="align-middle">
+                      <button class="btn btn-link text-secondary mb-0">
+                        <a href="{% url 'detail' 'ekstraksi' data.id %}" class="text-sm font-weight-light">
+                        <i class="fa fa-ellipsis-v text-xs"></i> Detail
+                        </a>
+                      </button>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  {% else %}
+                  <tr>
+                    <td colspan="5">
+                      <p class="text-sm text-center font-weight-bold mb-0">Data tidak tersedia</p>
+                    </td>
+                  </tr>
+                  {% endif %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div><!-- End Bordered Tabs Justified -->
+      </div>
+    </div>
+  </div>
+
+  {% endblock %}
